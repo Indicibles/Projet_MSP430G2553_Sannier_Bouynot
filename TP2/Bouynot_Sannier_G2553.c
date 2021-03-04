@@ -1,5 +1,5 @@
 #include <msp430.h>
-
+//test github
 Send_SPI(unsigned char sendCarac)
 {
     while ((UCB0STAT & UCBUSY));            // Wait USCI_SPI

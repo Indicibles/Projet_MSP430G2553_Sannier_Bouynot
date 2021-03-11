@@ -160,25 +160,6 @@ void init_SPI( void )
     UCB0CTL0 = 0;
     UCB0CTL1 = (0 + UCSWRST*1 );
 
-    // clearing IFg /16.4.9/p447/SLAU144j
-    // set by setting UCSWRST just before
-    IFG2 &= ~(UCB0TXIFG | UCB0RXIFG);
-
-    // Configuration SPI (voir slau144 p.445)
-    // UCCKPH = 0 -> Data changed on leading clock edges and sampled on trailing edges.
-    // UCCKPL = 0 -> Clock inactive state is low.
-    //   SPI Mode 0 :  UCCKPH * 1 | UCCKPL * 0
-    //   SPI Mode 1 :  UCCKPH * 0 | UCCKPL * 0  <--
-    //   SPI Mode 2 :  UCCKPH * 1 | UCCKPL * 1
-    //   SPI Mode 3 :  UCCKPH * 0 | UCCKPL * 1
-    // UCMSB  = 1 -> MSB premier
-    // UC7BIT = 0 -> 8 bits, 1 -> 7 bits
-    // UCMST  = 0 -> CLK by Master, 1 -> CLK by USCI bit CLK / p441/16.3.6
-    // UCMODE_x  x=0 -> 3-pin SPI,
-    //           x=1 -> 4-pin SPI UC0STE active high,
-    //           x=2 -> 4-pin SPI UC0STE active low,
-    //           x=3 -> i²c.
-    // UCSYNC = 1 -> Mode synchrone (SPI)
     UCB0CTL0 |= ( UCMST | UCMODE_0 | UCSYNC );
     UCB0CTL0 &= ~( UCCKPH | UCCKPL | UCMSB | UC7BIT );
     UCB0CTL1 |= UCSSEL_2;

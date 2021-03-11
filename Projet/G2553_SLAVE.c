@@ -2,6 +2,7 @@
 #include <string.h>
 
 void init_pwm()
+
 {
     WDTCTL = WDTPW + WDTHOLD;
     P2DIR |= BIT1 | BIT2 | BIT4 | BIT5;
@@ -17,14 +18,21 @@ void init_pwm()
 
     TA1CCTL1 |= OUTMOD_7;       // activation mode de sortie n°7
 
-    TA1CCR0 = 5000;             //timer
+    TA1CCR0 = 25000;             //timer
     TA1CCR1 = 0;
 
 }
-
-void rotation(void)
+void position0(void)
 {
-    TA1CCR1 = 2500;
+    TA1CCR1 = 312.5;
+}
+void position90(void)
+{
+    TA1CCR1 = 187.5;
+}
+void position180(void)
+{
+    TA1CCR1 = 62.5;
 }
 void stop_rotation(void)
 {
@@ -61,14 +69,28 @@ int main(void)
 
 __interrupt void USCIAB0RX_ISR()
 {
-          while (!(IFG2 & UCB0RXIFG));
+    while (!(IFG2 & UCB0RXIFG));
 
-          if(UCB0RXBUF=='1')
-          {
-              P1OUT |= BIT0;
-          }
-          if(UCB0RXBUF=='0')
-          {
-              P1OUT &= ~BIT0;
-          }
+    if(UCB0RXBUF=='0')
+    {
+        P1OUT &= ~BIT0;
+        stop_rotation();
+    }
+    if(UCB0RXBUF=='1')
+    {
+        P1OUT |= BIT0;
+    }
+    if(UCB0RXBUF=='2')
+    {
+        position0();
+    }
+    if(UCB0RXBUF=='3')
+    {
+        position90();
+    }
+
+    if(UCB0RXBUF=='4')
+    {
+        position180();
+    }
 }

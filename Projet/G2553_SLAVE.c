@@ -2,7 +2,6 @@
 #include <string.h>
 
 void init_pwm()
-
 {
     WDTCTL = WDTPW + WDTHOLD;
     P2DIR |= BIT1 | BIT2 | BIT4 | BIT5;

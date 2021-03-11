@@ -75,10 +75,35 @@ void interpreteur( void )
         Send_SPI(0x31); // Send '1' over SPI to Slave
         send_UART("\r\n");
     }
+
     else if (strcmp((const char *)cmd, "ver") == 0)
     {
         send_UART("\r\n");
         send_UART(RELEASE);
+        send_UART("\r\n");
+    }
+    else if (strcmp((const char *)cmd, "2") == 0)
+    {
+        send_UART("\r\n");
+        send_UART((unsigned char *)cmd);
+        send_UART("->");
+        Send_SPI(0x32); // Send '2' over SPI to Slave
+        send_UART("\r\n");
+    }
+    else if (strcmp((const char *)cmd, "3") == 0)
+    {
+        send_UART("\r\n");
+        send_UART((unsigned char *)cmd);
+        send_UART("->");
+        Send_SPI(0x33); // Send '2' over SPI to Slave
+        send_UART("\r\n");
+    }
+    else if (strcmp((const char *)cmd, "4") == 0)
+    {
+        send_UART("\r\n");
+        send_UART((unsigned char *)cmd);
+        send_UART("->");
+        Send_SPI(0x34); // Send '4' over SPI to Slave
         send_UART("\r\n");
     }
     else                          //---------------------------- default choice

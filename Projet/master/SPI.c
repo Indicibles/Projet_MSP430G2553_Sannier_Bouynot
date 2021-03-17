@@ -49,3 +49,4 @@ void Send_SPI(unsigned char carac)
     UCB0TXBUF = carac;              // Put character in transmit buffer
     send_UART((unsigned char *)cmd);   // slave echo
 }
+

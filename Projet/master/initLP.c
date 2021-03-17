@@ -38,3 +38,4 @@ void init_LP( void )
     P1DIR |= LED_R ;  // LED: output
     P1OUT &= ~LED_R ;
 }
+

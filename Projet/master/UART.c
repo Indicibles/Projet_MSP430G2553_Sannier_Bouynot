@@ -33,6 +33,7 @@ void init_UART( void )
  */
 void send_UART(unsigned char *msg)
 {
+    .
     unsigned int i = 0;
     for(i=0 ; msg[i] != 0x00 ; i++)
     {
@@ -103,3 +104,4 @@ void interpreteur( void )
     }
     send_UART(PROMPT);        //---------------------------- command prompt
 }
+

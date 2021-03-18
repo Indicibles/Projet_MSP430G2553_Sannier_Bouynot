@@ -4,13 +4,12 @@
 #include <PWM.h>
 #include <SPI_Slave.h>
 #include <initLP.h>
-#include <init_UV.h>
-#include <init_I2C.h>
-#include <rotation.h>
+#include <I2C.h>
+#include <UV_Sensor.h>
 
 int main(void)
 {
-    volatile unsigned int UV_analog_value =0;
+    volatile unsigned int UV_value =0;
     volatile double sensorValue;
     initi_LP_Slave();
     init_SPI_Slave();
@@ -20,15 +19,8 @@ int main(void)
     __bis_SR_register(GIE);       // Enter LPM4, enable interrupts
     while(1)
     {
-        UV_analog_value = Read_UV(0);
-        if (UV_analog_value<20)
-        {
-            sensorValue = 0;
-        }
-        else
-        {
-            sensorValue = 0.05*UV_analog_value-1;
-        }
+        UV_value = Read_UV(0);
+
         __delay_cycles(100000);
     }
 }

@@ -2,6 +2,7 @@
 #include <UART.h>
 #include <SPI.h>
 #include <initLP.h>
+#include <Interpreteur.h>
 
 #define PROMPT  "\r\nmaster>"
 #define CMDLEN  10

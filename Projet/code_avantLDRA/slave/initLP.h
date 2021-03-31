@@ -1,1 +1,1 @@
-void initi_LP_Slave();
+void init_LP_Slave();

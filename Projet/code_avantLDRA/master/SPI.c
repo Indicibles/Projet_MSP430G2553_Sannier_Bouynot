@@ -14,10 +14,10 @@ unsigned char cmd[CMDLEN];      // tableau de caracteres lie a la commande user
  */
 void init_SPI( void )
 {
-    // Waste Time, waiting Slave SYNC
+    // attente de sync avec le slave
     __delay_cycles(250);
 
-    // SOFTWARE RESET - mode configuration
+    /* SOFTWARE RESET - mode configuration*/
     UCB0CTL0 = 0;
     UCB0CTL1 = (0 + UCSWRST*1 );
 
@@ -25,16 +25,13 @@ void init_SPI( void )
     UCB0CTL0 &= ~( UCCKPH | UCCKPL | UCMSB | UC7BIT );
     UCB0CTL1 |= UCSSEL_2;
 
-    UCB0BR0 = 0x0A;     // divide SMCLK by 10
+    UCB0BR0 = 0x0A;     // divise SMCLK par 10
     UCB0BR1 = 0x00;
 
-    // SPI : Fonctions secondaires
-    // MISO-1.6 MOSI-1.7 et CLK-1.5
-    // Ref. SLAS735G p48,49
     P1SEL  |= ( SCK | DATA_OUT | DATA_IN);
     P1SEL2 |= ( SCK | DATA_OUT | DATA_IN);
 
-    UCB0CTL1 &= ~UCSWRST;                                // activation USCI
+    UCB0CTL1 &= ~UCSWRST;                                /*activation USCI*/
 }
 
 /* ----------------------------------------------------------------------------
@@ -44,9 +41,8 @@ void init_SPI( void )
  */
 void Send_SPI(unsigned char carac)
 {
-    while ((UCB0STAT & UCBUSY));   // attend que USCI_SPI soit dispo.
-    while(!(IFG2 & UCB0TXIFG)); // p442
-    UCB0TXBUF = carac;              // Put character in transmit buffer
-    send_UART((unsigned char *)cmd);   // slave echo
+    while ((UCB0STAT & UCBUSY));   /* attend que USCI_SPI soit dispo.*/
+    while(!(IFG2 & UCB0TXIFG));
+    UCB0TXBUF = carac;              /* met un caractère dans le buffer de transmition*/
 }
 
